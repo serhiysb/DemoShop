@@ -1,0 +1,87 @@
+﻿@model IndexViewModel<ProductListViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container shadow p-5">
+    @if (TempData["SuccessMsg"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMsg"]
+        </div>
+    }
+    <h1 class="text-center">Product List</h1>
+    <div class="col mb-3">
+        <a asp-controller="Product" asp-action="Create" class="btn btn-primary">
+            Add
+            Product
+        </a>
+    </div>
+    <table class="table table-light table-hover">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Product Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Color</th>
+                <th scope="col">Category</th>
+                <th scope="col">Image</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td width="15%">
+                        @item.Name
+                    </td>
+                    <td width="15%">
+                        @item.Description
+                    </td>
+                    <td width="10%">
+                        @item.Price
+                    </td>
+                    <td width="10%">
+                        @item.Color
+                    </td>
+                    <td width="10%">
+                        @item.Name
+                    </td>
+                    <td width="20%">
+                        <img src="@item.Image" class="img-thumbnail" />
+                    </td>
+                    <td>
+                        <p style="text-align:center">
+
+                        <a asp-controller="Product"
+                           asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class=" btn btn-success">Edit</a>
+                        <a asp-controller="Product"
+                           asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn btn-danger">Delete</a>
+                        </p>
+                        <p style="text-align:center">
+
+                        <a asp-controller="Product" 
+                        asp-action="Buy" 
+                        asp-route-id="@item.Id"
+                        class="btn btn-primary">Buy</a>
+                        </p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <p>
+        @if(Model.Pagination.HasPreviousPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.Pagination.PageNumber-1)">Prev</a>
+        }
+        @if(Model.Pagination.HasNextPage)
+        {
+            <a asp-action="Index" asp-route-page="@(Model.Pagination.PageNumber+1)">Next</a>
+        }
+    </p>
+</div>

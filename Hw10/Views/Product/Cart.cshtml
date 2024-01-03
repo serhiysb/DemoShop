@@ -1,0 +1,33 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Cart";
+    int counter = 0;
+}
+
+
+<h1>Cart</h1>
+
+@if(Model.Count == 0)
+{
+    <p>Cart is empty</p>
+}
+
+<div class="container text-center">
+    @foreach (var product in Model)
+    {
+        if (counter % 3 == 0)
+        {
+            @:</div><div class="row" style="justify-content: center">
+        }
+            <div class="card col-4" style="width: 18rem; min-height: 500px">
+                <img src="@product.Image" class="card-img-top" alt="@product.Name">
+                <div class="card-body align-items-end">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">@product.Price UAH</p>
+                    <a asp-action="DeleteOrder" asp-route-id="@product.Id" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+            counter++;
+    }
+</div>
+
